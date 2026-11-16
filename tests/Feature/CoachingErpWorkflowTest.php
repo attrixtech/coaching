@@ -73,6 +73,7 @@ class CoachingErpWorkflowTest extends TestCase
         $batch = Batch::first();
         $branch = Branch::first();
 
+        $uniq = uniqid();
         $postData = [
             'branch_id' => $branch->id,
             'course_id' => $course->id,
@@ -81,10 +82,10 @@ class CoachingErpWorkflowTest extends TestCase
             'last_name' => 'Menon',
             'gender' => 'female',
             'date_of_birth' => '2004-08-20',
-            'phone' => '+91 99112 33445',
-            'email' => 'pooja.menon@example.com',
+            'phone' => '+91 99' . rand(10000000, 99999999),
+            'email' => 'pooja.' . $uniq . '@example.com',
             'father_name' => 'Narayana Menon',
-            'father_phone' => '+91 99112 33446',
+            'father_phone' => '+91 98' . rand(10000000, 99999999),
             'current_address' => 'Indiranagar 2nd Stage',
             'city' => 'Bengaluru',
             'total_course_fee' => $course->total_fee,
@@ -230,5 +231,59 @@ class CoachingErpWorkflowTest extends TestCase
             'title' => 'Emergency Generator Fuel',
             'amount' => 4500,
         ]);
+    }
+
+    public function test_student_dashboard_isolation(): void
+    {
+        $studentUser = User::where('user_type', 'student')->first();
+        $this->assertNotNull($studentUser);
+
+        $response = $this->actingAs($studentUser)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSee('Student Academic Portal', false);
+        $response->assertSee('MY ACADEMICS', false);
+        $response->assertDontSee('STUDENT ACQUISITION', false);
+        $response->assertDontSee('FINANCES & CASHIER', false);
+        $response->assertDontSee('MANAGEMENT & ANALYTICS', false);
+    }
+
+    public function test_faculty_dashboard_isolation(): void
+    {
+        $facultyUser = User::where('user_type', 'faculty')->first();
+        $this->assertNotNull($facultyUser);
+
+        $response = $this->actingAs($facultyUser)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSee('Faculty Academic Console', false);
+        $response->assertSee('ACADEMICS & BATCHES', false);
+        $response->assertDontSee('STUDENT ACQUISITION', false);
+        $response->assertDontSee('FINANCES & CASHIER', false);
+        $response->assertDontSee('MANAGEMENT & ANALYTICS', false);
+    }
+
+    public function test_accountant_dashboard_isolation(): void
+    {
+        $accountantUser = User::where('user_type', 'accountant')->first();
+        $this->assertNotNull($accountantUser);
+
+        $response = $this->actingAs($accountantUser)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSee('Financial Accounts Console', false);
+        $response->assertSee('FINANCES & CASHIER', false);
+        $response->assertDontSee('STUDENT ACQUISITION', false);
+        $response->assertDontSee('EVALUATION & LMS', false);
+    }
+
+    public function test_counsellor_dashboard_isolation(): void
+    {
+        $counsellorUser = User::where('user_type', 'counsellor')->first();
+        $this->assertNotNull($counsellorUser);
+
+        $response = $this->actingAs($counsellorUser)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSee('Counselling & CRM Desk', false);
+        $response->assertSee('STUDENT ACQUISITION', false);
+        $response->assertDontSee('FINANCES & CASHIER', false);
+        $response->assertDontSee('EVALUATION & LMS', false);
     }
 }

@@ -60,3 +60,4 @@ class CertificateController extends Controller
         return view('certificates.verify', compact('certificate', 'code'));
     }
 }
+

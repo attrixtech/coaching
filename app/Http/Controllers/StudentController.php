@@ -104,3 +104,4 @@ class StudentController extends Controller
         return redirect()->route('students.show', $student)->with('success', 'Student details updated successfully.');
     }
 }
+

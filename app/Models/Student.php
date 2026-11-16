@@ -78,3 +78,4 @@ class Student extends Model
         return trim($this->first_name . ' ' . $this->last_name);
     }
 }
+

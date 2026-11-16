@@ -26,3 +26,4 @@ class DemoClass extends Model
         return $this->belongsTo(User::class, 'faculty_id');
     }
 }
+

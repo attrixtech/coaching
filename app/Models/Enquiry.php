@@ -51,3 +51,4 @@ class Enquiry extends Model
         return $this->hasOne(Admission::class);
     }
 }
+

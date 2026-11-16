@@ -11,3 +11,4 @@ class EnquirySource extends Model
 
     protected $guarded = ['id'];
 }
+

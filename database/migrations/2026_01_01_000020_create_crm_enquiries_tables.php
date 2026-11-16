@@ -92,3 +92,4 @@ return new class extends Migration
         Schema::dropIfExists('enquiry_sources');
     }
 };
+

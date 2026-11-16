@@ -70,3 +70,4 @@ class Batch extends Model
         return $this->hasMany(Assignment::class);
     }
 }
+

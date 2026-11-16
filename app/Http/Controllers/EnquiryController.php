@@ -131,3 +131,4 @@ class EnquiryController extends Controller
         return back()->with('success', 'Follow-up interaction logged successfully.');
     }
 }
+

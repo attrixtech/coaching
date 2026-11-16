@@ -215,3 +215,4 @@ class AdmissionController extends Controller
         return view('admissions.show', compact('admission'));
     }
 }
+

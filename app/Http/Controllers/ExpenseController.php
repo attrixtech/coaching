@@ -48,3 +48,4 @@ class ExpenseController extends Controller
         return back()->with('success', 'Expense voucher created successfully.');
     }
 }
+

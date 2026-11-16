@@ -21,3 +21,4 @@ class StudyMaterial extends Model
         return $this->belongsTo(Subject::class);
     }
 }
+

@@ -63,167 +63,325 @@
 
             <!-- Navigation Links -->
             <nav class="flex-1 overflow-y-auto px-4 py-4 space-y-6 text-xs font-medium">
+                @php
+                    $u = auth()->user();
+                    $isAdmin = $u && ($u->isSuperAdmin() || $u->isBranchManager());
+                    $isCounsellor = $u && $u->isCounsellor();
+                    $isAccountant = $u && $u->isAccountant();
+                    $isFaculty = $u && $u->isFaculty();
+                    $isStudent = $u && $u->isStudent();
+                @endphp
+
                 <!-- Group 1: Overview -->
                 <div>
-                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">CORE DASHBOARD</div>
+                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                        @if($isStudent)
+                            MY PORTAL
+                        @elseif($isFaculty)
+                            FACULTY CONSOLE
+                        @elseif($isAccountant)
+                            ACCOUNTS CONSOLE
+                        @elseif($isCounsellor)
+                            CRM & LEADS CONSOLE
+                        @else
+                            CORE DASHBOARD
+                        @endif
+                    </div>
                     <ul class="space-y-1">
                         <li>
                             <a href="{{ route('dashboard') }}" 
                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('dashboard') ? 'bg-brand-600 text-white font-semibold shadow-md shadow-brand-600/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                                 <i class="fa-solid fa-gauge-high w-4 text-center"></i>
-                                <span>Overview Dashboard</span>
+                                <span>
+                                    @if($isStudent)
+                                        Student Dashboard
+                                    @elseif($isFaculty)
+                                        Teaching Dashboard
+                                    @elseif($isAccountant)
+                                        Accounts Dashboard
+                                    @elseif($isCounsellor)
+                                        Counsellor Dashboard
+                                    @else
+                                        Executive Dashboard
+                                    @endif
+                                </span>
                             </a>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Group 2: Student Acquisition -->
-                <div>
-                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">STUDENT ACQUISITION</div>
-                    <ul class="space-y-1">
-                        <li>
-                            <a href="{{ route('enquiries.index') }}" 
-                               class="flex items-center justify-between px-3 py-2.5 rounded-lg transition {{ request()->routeIs('enquiries*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-funnel-dollar w-4 text-center"></i>
-                                    <span>Enquiries & Leads CRM</span>
-                                </div>
-                                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full font-mono">100</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admissions.index') }}" 
-                               class="flex items-center justify-between px-3 py-2.5 rounded-lg transition {{ request()->routeIs('admissions*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <div class="flex items-center gap-3">
+                @if($isStudent)
+                    <!-- STUDENT EXCLUSIVE MENU -->
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">MY ACADEMICS</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('batches.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('batches*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-users-rectangle w-4 text-center"></i>
+                                    <span>My Classes & Batches</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('attendance.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('attendance*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-clipboard-user w-4 text-center"></i>
+                                    <span>My Attendance Record</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">FINANCES & RECEIPTS</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('fees.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.index') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-file-invoice-dollar w-4 text-center"></i>
+                                    <span>My Fee Installments</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('fees.payments') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.payments') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-receipt w-4 text-center"></i>
+                                    <span>My Payment Receipts</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">LEARNING & EXAMS</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('exams.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('exams*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-pen-to-square w-4 text-center"></i>
+                                    <span>Exams & Scorecards</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('lms.assignments') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('lms.assignments*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-tasks w-4 text-center"></i>
+                                    <span>My Homework Assignments</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('lms.materials') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('lms.materials*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-folder-open w-4 text-center"></i>
+                                    <span>Digital Study Handouts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('certificates.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('certificates*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-certificate w-4 text-center"></i>
+                                    <span>My Issued Certificates</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                @else
+
+                    @if($isAdmin || $isCounsellor)
+                    <!-- Student Acquisition -->
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">STUDENT ACQUISITION</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('enquiries.index') }}" 
+                                   class="flex items-center justify-between px-3 py-2.5 rounded-lg transition {{ request()->routeIs('enquiries*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid fa-funnel-dollar w-4 text-center"></i>
+                                        <span>Enquiries & Leads CRM</span>
+                                    </div>
+                                    <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full font-mono">100</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admissions.index') }}" 
+                                   class="flex items-center justify-between px-3 py-2.5 rounded-lg transition {{ request()->routeIs('admissions*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid fa-id-card-clip w-4 text-center"></i>
+                                        <span>Admissions & Enroll</span>
+                                    </div>
+                                    <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-mono">Active</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('students.index') }}" 
+                                   class="flex items-center justify-between px-3 py-2.5 rounded-lg transition {{ request()->routeIs('students*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid fa-user-graduate w-4 text-center"></i>
+                                        <span>Student Directory (100)</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @elseif($isAccountant)
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">STUDENT DIRECTORY</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('admissions.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('admissions*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                                     <i class="fa-solid fa-id-card-clip w-4 text-center"></i>
-                                    <span>Admissions & Enroll</span>
-                                </div>
-                                <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-mono">Active</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('students.index') }}" 
-                               class="flex items-center justify-between px-3 py-2.5 rounded-lg transition {{ request()->routeIs('students*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <div class="flex items-center gap-3">
+                                    <span>Admissions Register</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('students.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('students*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                                     <i class="fa-solid fa-user-graduate w-4 text-center"></i>
-                                    <span>Student Directory (100)</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                                    <span>Student Directory</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
 
-                <!-- Group 3: Academics -->
-                <div>
-                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">ACADEMICS & BATCHES</div>
-                    <ul class="space-y-1">
-                        <li>
-                            <a href="{{ route('courses.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('courses*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-book-open w-4 text-center"></i>
-                                <span>Courses & Syllabus (10)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('batches.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('batches*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-users-rectangle w-4 text-center"></i>
-                                <span>Batches & Timetable (20)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('attendance.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('attendance*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-clipboard-user w-4 text-center"></i>
-                                <span>Daily Attendance Register</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    @if($isAdmin || $isFaculty || $isCounsellor)
+                    <!-- Academics -->
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">ACADEMICS & BATCHES</div>
+                        <ul class="space-y-1">
+                            @if(!$isFaculty)
+                            <li>
+                                <a href="{{ route('courses.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('courses*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-book-open w-4 text-center"></i>
+                                    <span>Courses & Syllabus</span>
+                                </a>
+                            </li>
+                            @endif
+                            <li>
+                                <a href="{{ route('batches.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('batches*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-users-rectangle w-4 text-center"></i>
+                                    <span>{{ $isFaculty ? 'My Cohorts & Timetable' : 'Batches & Timetable' }}</span>
+                                </a>
+                            </li>
+                            @if(!$isCounsellor)
+                            <li>
+                                <a href="{{ route('attendance.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('attendance*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-clipboard-user w-4 text-center"></i>
+                                    <span>Daily Attendance Register</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                    @endif
 
-                <!-- Group 4: Finance -->
-                <div>
-                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">FINANCES & CASHIER</div>
-                    <ul class="space-y-1">
-                        <li>
-                            <a href="{{ route('fees.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.index') || request()->routeIs('fees.collect') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-file-invoice-dollar w-4 text-center"></i>
-                                <span>Fee Dues & Installments</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('fees.payments') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.payments') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-receipt w-4 text-center"></i>
-                                <span>Fee Payment Receipts (50)</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('expenses.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('expenses*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-money-bill-transfer w-4 text-center"></i>
-                                <span>Operating Expenses (10)</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    @if($isAdmin || $isAccountant)
+                    <!-- Finance -->
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">FINANCES & CASHIER</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('fees.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.index') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-file-invoice-dollar w-4 text-center"></i>
+                                    <span>Fee Dues & Installments</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('fees.collect') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.collect') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-cash-register w-4 text-center"></i>
+                                    <span>Cashier Collection Desk</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('fees.payments') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('fees.payments') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-receipt w-4 text-center"></i>
+                                    <span>Fee Payment Receipts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('expenses.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('expenses*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-money-bill-transfer w-4 text-center"></i>
+                                    <span>Operating Expenses</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
 
-                <!-- Group 5: Learning & Exams -->
-                <div>
-                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">EVALUATION & LMS</div>
-                    <ul class="space-y-1">
-                        <li>
-                            <a href="{{ route('exams.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('exams*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-pen-to-square w-4 text-center"></i>
-                                <span>Examinations & Results</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('lms.assignments') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('lms.assignments*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-tasks w-4 text-center"></i>
-                                <span>Assignments & Homework</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('lms.materials') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('lms.materials*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-folder-open w-4 text-center"></i>
-                                <span>Study Materials & LMS</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('certificates.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('certificates*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-certificate w-4 text-center"></i>
-                                <span>Certificates & Verification</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    @if($isAdmin || $isFaculty)
+                    <!-- Learning & Exams -->
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">EVALUATION & LMS</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('exams.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('exams*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-pen-to-square w-4 text-center"></i>
+                                    <span>Examinations & Results</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('lms.assignments') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('lms.assignments*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-tasks w-4 text-center"></i>
+                                    <span>Assignments & Homework</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('lms.materials') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('lms.materials*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-folder-open w-4 text-center"></i>
+                                    <span>Study Materials & LMS</span>
+                                </a>
+                            </li>
+                            @if($isAdmin)
+                            <li>
+                                <a href="{{ route('certificates.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('certificates*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-certificate w-4 text-center"></i>
+                                    <span>Certificates & Verification</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                    @endif
 
-                <!-- Group 6: System & Reports -->
-                <div>
-                    <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">MANAGEMENT & ANALYTICS</div>
-                    <ul class="space-y-1">
-                        <li>
-                            <a href="{{ route('reports.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('reports*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-chart-line w-4 text-center"></i>
-                                <span>Reports & Business Analytics</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('settings.index') }}" 
-                               class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('settings*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                                <i class="fa-solid fa-sliders w-4 text-center"></i>
-                                <span>Branches & User Settings</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    @if($isAdmin || $isAccountant)
+                    <!-- Management & Reports -->
+                    <div>
+                        <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">MANAGEMENT & ANALYTICS</div>
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('reports.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('reports*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-chart-line w-4 text-center"></i>
+                                    <span>Reports & Business Analytics</span>
+                                </a>
+                            </li>
+                            @if($isAdmin)
+                            <li>
+                                <a href="{{ route('settings.index') }}" 
+                                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('settings*') ? 'bg-brand-600 text-white font-semibold' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                                    <i class="fa-solid fa-sliders w-4 text-center"></i>
+                                    <span>Branches & User Settings</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                    @endif
+
+                @endif
             </nav>
 
             <!-- Bottom User Profile Card -->
@@ -273,22 +431,48 @@
                 <div class="flex items-center gap-2 sm:gap-3">
                     <!-- Quick Demo Role Switcher (Pills) -->
                     <div class="hidden lg:flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-[11px]">
-                        <span class="text-slate-400 px-1.5 font-bold uppercase text-[9px]">Demo:</span>
+                        <span class="text-slate-400 px-1.5 font-bold uppercase text-[9px]">Role Demo:</span>
                         <a href="{{ route('quick-login', 'admin') }}" class="px-2 py-0.5 rounded {{ auth()->user()?->user_type === 'super_admin' ? 'bg-white shadow font-bold text-brand-700' : 'text-slate-600 hover:text-slate-900' }}">Admin</a>
                         <a href="{{ route('quick-login', 'counsellor') }}" class="px-2 py-0.5 rounded {{ auth()->user()?->user_type === 'counsellor' ? 'bg-white shadow font-bold text-brand-700' : 'text-slate-600 hover:text-slate-900' }}">Counsellor</a>
                         <a href="{{ route('quick-login', 'accountant') }}" class="px-2 py-0.5 rounded {{ auth()->user()?->user_type === 'accountant' ? 'bg-white shadow font-bold text-brand-700' : 'text-slate-600 hover:text-slate-900' }}">Accounts</a>
                         <a href="{{ route('quick-login', 'faculty') }}" class="px-2 py-0.5 rounded {{ auth()->user()?->user_type === 'faculty' ? 'bg-white shadow font-bold text-brand-700' : 'text-slate-600 hover:text-slate-900' }}">Faculty</a>
+                        <a href="{{ route('quick-login', 'student') }}" class="px-2 py-0.5 rounded {{ auth()->user()?->user_type === 'student' ? 'bg-white shadow font-bold text-brand-700' : 'text-slate-600 hover:text-slate-900' }}">Student</a>
                     </div>
 
-                    <a href="{{ route('enquiries.create') }}" class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
-                        <i class="fa-solid fa-user-plus text-slate-500"></i>
-                        <span class="hidden sm:inline">+ Lead</span>
-                    </a>
+                    @if($isAdmin || $isCounsellor)
+                        <a href="{{ route('enquiries.create') }}" class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-user-plus text-slate-500"></i>
+                            <span class="hidden sm:inline">+ Lead</span>
+                        </a>
 
-                    <a href="{{ route('admissions.create') }}" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm shadow-brand-600/30 transition">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                        <span>+ Admission</span>
-                    </a>
+                        <a href="{{ route('admissions.create') }}" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm shadow-brand-600/30 transition">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>+ Admission</span>
+                        </a>
+                    @elseif($isAccountant)
+                        <a href="{{ route('fees.collect') }}" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition">
+                            <i class="fa-solid fa-cash-register"></i>
+                            <span>+ Collect Fee</span>
+                        </a>
+                        <a href="{{ route('expenses.index') }}" class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-receipt text-slate-500"></i>
+                            <span class="hidden sm:inline">Expenses</span>
+                        </a>
+                    @elseif($isFaculty)
+                        <a href="{{ route('attendance.index') }}" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition">
+                            <i class="fa-solid fa-clipboard-user"></i>
+                            <span>Mark Attendance</span>
+                        </a>
+                    @elseif($isStudent)
+                        <a href="{{ route('fees.index') }}" class="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-wallet"></i>
+                            <span>Fee Ledger</span>
+                        </a>
+                        <a href="{{ route('exams.index') }}" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <span>Online Tests</span>
+                        </a>
+                    @endif
                 </div>
             </header>
 
@@ -344,3 +528,4 @@
     @stack('scripts')
 </body>
 </html>
+

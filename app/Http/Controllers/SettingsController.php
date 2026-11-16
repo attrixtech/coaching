@@ -83,3 +83,4 @@ class SettingsController extends Controller
         return back()->with('success', 'System settings updated.');
     }
 }
+

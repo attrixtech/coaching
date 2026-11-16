@@ -63,3 +63,4 @@ class AttendanceController extends Controller
         ])->with('success', 'Attendance marked successfully for ' . count($validated['attendance']) . ' students.');
     }
 }
+

@@ -105,3 +105,4 @@ class CourseController extends Controller
         return back()->with('success', 'Subject added to course syllabus.');
     }
 }
+

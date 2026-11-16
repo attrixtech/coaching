@@ -63,6 +63,36 @@ class User extends Authenticatable
         return $this->hasRole('super_admin') || $this->user_type === 'super_admin';
     }
 
+    public function isBranchManager(): bool
+    {
+        return $this->hasRole('branch_manager') || $this->user_type === 'branch_manager';
+    }
+
+    public function isCounsellor(): bool
+    {
+        return $this->hasRole('counsellor') || $this->user_type === 'counsellor';
+    }
+
+    public function isAccountant(): bool
+    {
+        return $this->hasRole('accountant') || $this->user_type === 'accountant';
+    }
+
+    public function isFaculty(): bool
+    {
+        return $this->hasRole('faculty') || $this->user_type === 'faculty';
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->hasRole('student') || $this->user_type === 'student';
+    }
+
+    public function isParent(): bool
+    {
+        return $this->hasRole('parent') || $this->user_type === 'parent';
+    }
+
     public function hasPermission(string $permissionSlug): bool
     {
         if ($this->isSuperAdmin()) {

@@ -125,3 +125,4 @@ class FeeController extends Controller
         return view('fees.receipt', compact('payment'));
     }
 }
+

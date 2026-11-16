@@ -26,3 +26,4 @@ class StudentFeeDue extends Model
         return $this->hasMany(Payment::class, 'student_fee_due_id');
     }
 }
+

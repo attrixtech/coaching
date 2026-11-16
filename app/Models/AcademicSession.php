@@ -16,3 +16,4 @@ class AcademicSession extends Model
         return $this->belongsTo(Institute::class);
     }
 }
+

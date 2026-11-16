@@ -31,3 +31,4 @@ class Timetable extends Model
         return $this->belongsTo(Classroom::class);
     }
 }
+

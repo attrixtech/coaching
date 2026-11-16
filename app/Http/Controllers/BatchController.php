@@ -104,3 +104,4 @@ class BatchController extends Controller
         return back()->with('success', "Student {$student->full_name} enrolled into batch.");
     }
 }
+

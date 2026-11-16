@@ -113,3 +113,4 @@ class ExamController extends Controller
         return view('exams.report_card', compact('exam', 'student', 'attempt'));
     }
 }
+

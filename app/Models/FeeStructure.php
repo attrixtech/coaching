@@ -21,3 +21,4 @@ class FeeStructure extends Model
         return $this->hasMany(FeeInstallment::class)->orderBy('installment_number');
     }
 }
+

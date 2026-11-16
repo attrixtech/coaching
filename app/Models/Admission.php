@@ -46,3 +46,4 @@ class Admission extends Model
         return $this->hasMany(StudentFeeDue::class);
     }
 }
+

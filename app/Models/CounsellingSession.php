@@ -21,3 +21,4 @@ class CounsellingSession extends Model
         return $this->belongsTo(User::class, 'counsellor_id');
     }
 }
+

@@ -16,3 +16,4 @@ class FeeInstallment extends Model
         return $this->belongsTo(FeeStructure::class);
     }
 }
+

@@ -73,3 +73,4 @@ class LmsController extends Controller
         return back()->with('success', 'Study material uploaded successfully.');
     }
 }
+
