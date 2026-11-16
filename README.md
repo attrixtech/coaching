@@ -8,7 +8,11 @@
 **Webotapp Coaching Institute Management ERP** is an enterprise operations management suite built specifically for educational institutions, test-prep academies (IIT-JEE / NEET / UPSC), IT bootcamps, and vocational training centers.
 
 The application manages the entire educational operations lifecycle:
-$$\text{Lead Inquiries} \longrightarrow \text{Follow-ups} \longrightarrow \text{Counselling} \longrightarrow \text{Admission} \longrightarrow \text{Batch Allocation} \longrightarrow \text{Installment Dues} \longrightarrow \text{Cashier Payments} \longrightarrow \text{Biometric Attendance} \longrightarrow \text{LMS \& Assignments} \longrightarrow \text{Examinations} \longrightarrow \text{Report Cards} \longrightarrow \text{QR-Verified Certificates}$$
+
+```text
+Lead Inquiries ➔ Follow-ups ➔ Counselling ➔ Admission ➔ Batch Allocation ➔ Installment Dues 
+➔ Cashier Payments ➔ Biometric Attendance ➔ LMS & Assignments ➔ Examinations ➔ Report Cards ➔ QR-Verified Certificates
+```
 
 ---
 
@@ -96,7 +100,7 @@ Run the automated test suite anytime using:
 ```bash
 php artisan test
 ```
-All 13 integration and workflow feature tests pass with 35 assertions covering authentication, CRM leads, student admissions, fee payments, attendance marking, report cards, and public certificate verification.
+All 17 integration and workflow feature tests pass with 61 assertions covering role dashboard isolation, authentication, CRM leads, student admissions, fee payments, attendance marking, report cards, and public certificate verification.
 
 ---
 
