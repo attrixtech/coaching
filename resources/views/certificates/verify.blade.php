@@ -16,7 +16,7 @@
             <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-md">
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <h1 class="text-lg font-bold">Webotapp Academy</h1>
+            <h1 class="text-lg font-bold">{{ $appInstituteName ?? 'Webotapp Academy' }}</h1>
             <p class="text-xs text-slate-400">Official Digital Credential & Certificate Verification Portal</p>
         </div>
 
@@ -28,7 +28,7 @@
                         <i class="fa-solid fa-check"></i>
                     </div>
                     <h2 class="text-base font-extrabold text-emerald-900">Valid & Authenticated Credential</h2>
-                    <p class="text-xs text-emerald-700 mt-0.5">This certificate record has been verified against Webotapp Academy official records.</p>
+                    <p class="text-xs text-emerald-700 mt-0.5">This certificate record has been verified against {{ $appInstituteName ?? 'Webotapp Academy' }} official records.</p>
                 </div>
 
                 <!-- Credential Details Table -->

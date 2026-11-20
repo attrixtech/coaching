@@ -27,9 +27,9 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">Webotapp Academy</h1>
-                    <div class="text-[11px] text-slate-500 font-medium">Premier Institute for Tech, Management & Competitive Coaching</div>
-                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">GSTIN: 29AAACW1234F1Z5 &bull; PAN: AAACW1234F</div>
+                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'Webotapp Academy' }}</h1>
+                    <div class="text-[11px] text-slate-500 font-medium">{{ $systemSettings['institute_tagline'] ?? $appInstitute?->tagline ?? 'Premier Institute for Tech, Management & Competitive Coaching' }}</div>
+                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">GSTIN: {{ $systemSettings['gstin'] ?? $appCompany?->gstin ?? '29AAACW1234F1Z5' }} &bull; PAN: {{ $appCompany?->pan_number ?? 'AAACW1234F' }}</div>
                 </div>
             </div>
 

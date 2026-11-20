@@ -78,9 +78,14 @@ class AdmissionController extends Controller
             'discount_amount' => 'nullable|numeric|min:0',
             'discount_reason' => 'nullable|string|max:191',
             'fee_plan' => 'required|in:full_upfront,installments',
-            'installments_count' => 'required|integer|min:1|max:12',
+            'installments_count' => 'required|integer|min:1|max:24',
             'collected_downpayment' => 'nullable|numeric|min:0',
             'payment_method' => 'nullable|in:cash,upi,card,net_banking,cheque',
+            'custom_installments' => 'nullable|array',
+            'custom_installments.*.installment_no' => 'nullable|integer',
+            'custom_installments.*.title' => 'nullable|string|max:191',
+            'custom_installments.*.due_date' => 'nullable|date',
+            'custom_installments.*.amount' => 'nullable|numeric|min:0',
         ]);
 
         return DB::transaction(function() use ($validated, $request) {
@@ -134,8 +139,19 @@ class AdmissionController extends Controller
             ]);
 
             // 4. Create Admission
-            $discount = $validated['discount_amount'] ?? 0;
-            $finalFee = max(0, $validated['total_course_fee'] - $discount);
+            $discount = (float)($validated['discount_amount'] ?? 0);
+            $hasCustomInstallments = !empty($request->custom_installments) && is_array($request->custom_installments) && count($request->custom_installments) > 0;
+
+            if ($hasCustomInstallments && $validated['fee_plan'] === 'installments') {
+                $customTotal = (float)collect($request->custom_installments)->sum('amount');
+                $finalFee = $customTotal;
+                $installmentsCount = count($request->custom_installments);
+                $totalCourseFee = max((float)$validated['total_course_fee'], $finalFee + $discount);
+            } else {
+                $finalFee = max(0, (float)$validated['total_course_fee'] - $discount);
+                $installmentsCount = (int)$validated['installments_count'];
+                $totalCourseFee = (float)$validated['total_course_fee'];
+            }
 
             $admission = Admission::create([
                 'branch_id' => $branch->id,
@@ -146,57 +162,110 @@ class AdmissionController extends Controller
                 'enquiry_id' => $validated['enquiry_id'] ?? null,
                 'admission_no' => $admNo,
                 'admission_date' => now()->toDateString(),
-                'total_course_fee' => $validated['total_course_fee'],
+                'total_course_fee' => $totalCourseFee,
                 'discount_amount' => $discount,
                 'discount_reason' => $validated['discount_reason'] ?? null,
                 'final_agreed_fee' => $finalFee,
                 'fee_plan' => $validated['fee_plan'],
-                'installments_count' => $validated['installments_count'],
+                'installments_count' => $installmentsCount,
                 'status' => 'confirmed',
                 'admitted_by' => auth()->id() ?? 1,
             ]);
 
             // 5. Generate Installments Dues
-            $count = (int)$validated['installments_count'];
-            $installmentAmount = round($finalFee / $count, 2);
+            $downPaymentRemaining = !empty($validated['collected_downpayment']) ? (float)$validated['collected_downpayment'] : 0;
 
-            for ($i = 1; $i <= $count; $i++) {
-                $dueDate = now()->addDays(($i - 1) * 30)->toDateString();
-                $isDownPayment = ($i === 1);
-                $collectedNow = ($isDownPayment && !empty($validated['collected_downpayment'])) ? (float)$validated['collected_downpayment'] : 0;
-                $isPaid = ($collectedNow >= $installmentAmount);
-                $isPartial = ($collectedNow > 0 && $collectedNow < $installmentAmount);
+            if ($hasCustomInstallments && $validated['fee_plan'] === 'installments') {
+                $idx = 1;
+                foreach ($request->custom_installments as $item) {
+                    $installmentAmount = (float)($item['amount'] ?? 0);
+                    $dueDate = !empty($item['due_date']) ? $item['due_date'] : now()->addDays(($idx - 1) * 30)->toDateString();
+                    $title = !empty($item['title']) ? $item['title'] : ($idx === 1 ? 'Admission Down-payment' : "Installment {$idx} Dues");
 
-                $due = StudentFeeDue::create([
-                    'branch_id' => $branch->id,
-                    'student_id' => $student->id,
-                    'admission_id' => $admission->id,
-                    'installment_no' => $i,
-                    'title' => $i === 1 ? 'Admission Down-payment' : "Installment {$i} Dues",
-                    'due_date' => $dueDate,
-                    'base_amount' => $installmentAmount,
-                    'fine_amount' => 0,
-                    'discount_amount' => 0,
-                    'net_amount' => $installmentAmount,
-                    'paid_amount' => $collectedNow,
-                    'balance_amount' => max(0, $installmentAmount - $collectedNow),
-                    'status' => $isPaid ? 'paid' : ($isPartial ? 'partially_paid' : 'unpaid'),
-                ]);
+                    $paidThisDue = 0;
+                    if ($downPaymentRemaining > 0 && $installmentAmount > 0) {
+                        $paidThisDue = min($downPaymentRemaining, $installmentAmount);
+                        $downPaymentRemaining -= $paidThisDue;
+                    }
 
-                if ($collectedNow > 0) {
-                    $receiptCount = Payment::count() + 1;
-                    Payment::create([
+                    $isPaid = ($paidThisDue >= $installmentAmount && $installmentAmount > 0);
+                    $isPartial = ($paidThisDue > 0 && $paidThisDue < $installmentAmount);
+
+                    $due = StudentFeeDue::create([
                         'branch_id' => $branch->id,
                         'student_id' => $student->id,
-                        'student_fee_due_id' => $due->id,
-                        'receipt_no' => 'RCP-' . date('Y') . '-' . sprintf('%05d', $receiptCount),
-                        'payment_date' => now()->toDateString(),
-                        'amount' => $collectedNow,
-                        'payment_method' => $validated['payment_method'] ?? 'cash',
-                        'transaction_reference' => 'TXN' . strtoupper(Str::random(8)),
-                        'received_by' => auth()->id() ?? 1,
-                        'remarks' => 'Collected upon admission enrolment.',
+                        'admission_id' => $admission->id,
+                        'installment_no' => $idx,
+                        'title' => $title,
+                        'due_date' => $dueDate,
+                        'base_amount' => $installmentAmount,
+                        'fine_amount' => 0,
+                        'discount_amount' => 0,
+                        'net_amount' => $installmentAmount,
+                        'paid_amount' => $paidThisDue,
+                        'balance_amount' => max(0, $installmentAmount - $paidThisDue),
+                        'status' => $isPaid ? 'paid' : ($isPartial ? 'partially_paid' : 'unpaid'),
                     ]);
+
+                    if ($paidThisDue > 0) {
+                        $receiptCount = Payment::count() + 1;
+                        Payment::create([
+                            'branch_id' => $branch->id,
+                            'student_id' => $student->id,
+                            'student_fee_due_id' => $due->id,
+                            'receipt_no' => 'RCP-' . date('Y') . '-' . sprintf('%05d', $receiptCount),
+                            'payment_date' => now()->toDateString(),
+                            'amount' => $paidThisDue,
+                            'payment_method' => $validated['payment_method'] ?? 'cash',
+                            'transaction_reference' => 'TXN' . strtoupper(Str::random(8)),
+                            'received_by' => auth()->id() ?? 1,
+                            'remarks' => $idx === 1 ? 'Collected upon admission enrolment (Down-payment).' : "Collected upon admission enrolment for {$title}.",
+                        ]);
+                    }
+                    $idx++;
+                }
+            } else {
+                $count = $installmentsCount;
+                $installmentAmount = round($finalFee / $count, 2);
+
+                for ($i = 1; $i <= $count; $i++) {
+                    $dueDate = now()->addDays(($i - 1) * 30)->toDateString();
+                    $isDownPayment = ($i === 1);
+                    $collectedNow = ($isDownPayment && !empty($validated['collected_downpayment'])) ? (float)$validated['collected_downpayment'] : 0;
+                    $isPaid = ($collectedNow >= $installmentAmount);
+                    $isPartial = ($collectedNow > 0 && $collectedNow < $installmentAmount);
+
+                    $due = StudentFeeDue::create([
+                        'branch_id' => $branch->id,
+                        'student_id' => $student->id,
+                        'admission_id' => $admission->id,
+                        'installment_no' => $i,
+                        'title' => $i === 1 ? 'Admission Down-payment' : "Installment {$i} Dues",
+                        'due_date' => $dueDate,
+                        'base_amount' => $installmentAmount,
+                        'fine_amount' => 0,
+                        'discount_amount' => 0,
+                        'net_amount' => $installmentAmount,
+                        'paid_amount' => $collectedNow,
+                        'balance_amount' => max(0, $installmentAmount - $collectedNow),
+                        'status' => $isPaid ? 'paid' : ($isPartial ? 'partially_paid' : 'unpaid'),
+                    ]);
+
+                    if ($collectedNow > 0) {
+                        $receiptCount = Payment::count() + 1;
+                        Payment::create([
+                            'branch_id' => $branch->id,
+                            'student_id' => $student->id,
+                            'student_fee_due_id' => $due->id,
+                            'receipt_no' => 'RCP-' . date('Y') . '-' . sprintf('%05d', $receiptCount),
+                            'payment_date' => now()->toDateString(),
+                            'amount' => $collectedNow,
+                            'payment_method' => $validated['payment_method'] ?? 'cash',
+                            'transaction_reference' => 'TXN' . strtoupper(Str::random(8)),
+                            'received_by' => auth()->id() ?? 1,
+                            'remarks' => 'Collected upon admission enrolment.',
+                        ]);
+                    }
                 }
             }
 

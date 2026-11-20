@@ -41,7 +41,7 @@
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
             <h1 class="text-3xl font-black tracking-wider uppercase text-indigo-950 font-sans">
-                Webotapp Academy
+                {{ $appInstituteName ?? 'Webotapp Academy' }}
             </h1>
             <p class="text-xs uppercase tracking-widest text-amber-700 font-sans font-bold">
                 Institute of Advanced Technology & Applied Sciences

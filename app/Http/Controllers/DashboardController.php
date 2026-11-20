@@ -17,7 +17,10 @@ class DashboardController extends Controller
 
         // 1. STUDENT PORTAL DASHBOARD
         if ($user->isStudent()) {
-            $student = $user->student ?? Student::where('email', $user->email)->first();
+            $student = $user->student 
+                ?? Student::where('user_id', $user->id)->first() 
+                ?? Student::where('email', $user->email)->first() 
+                ?? Student::first();
             
             if ($student) {
                 $student->load([

@@ -16,6 +16,11 @@ class StudentFeeDue extends Model
         return $this->belongsTo(Student::class);
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function admission()
     {
         return $this->belongsTo(Admission::class);

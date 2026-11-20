@@ -103,10 +103,10 @@ class CoachingErpWorkflowTest extends TestCase
         $this->assertDatabaseHas('students', [
             'first_name' => 'Pooja',
             'last_name' => 'Menon',
-            'email' => 'pooja.menon@example.com',
+            'email' => $postData['email'],
         ]);
 
-        $student = Student::where('email', 'pooja.menon@example.com')->first();
+        $student = Student::where('email', $postData['email'])->first();
         $this->assertNotNull($student);
 
         // Assert admission created
@@ -123,6 +123,83 @@ class CoachingErpWorkflowTest extends TestCase
         $this->assertDatabaseHas('payments', [
             'student_id' => $student->id,
             'amount' => 15000,
+        ]);
+    }
+
+    public function test_admission_creation_with_custom_modified_installment_fees(): void
+    {
+        $course = Course::first();
+        $batch = Batch::first();
+        $branch = Branch::first();
+
+        $uniq = uniqid();
+        $postData = [
+            'branch_id' => $branch->id,
+            'course_id' => $course->id,
+            'batch_id' => $batch->id,
+            'first_name' => 'Rahul',
+            'last_name' => 'Sharma',
+            'gender' => 'male',
+            'date_of_birth' => '2003-05-10',
+            'phone' => '+91 91' . rand(10000000, 99999999),
+            'email' => 'rahul.' . $uniq . '@example.com',
+            'father_name' => 'Ramesh Sharma',
+            'father_phone' => '+91 97' . rand(10000000, 99999999),
+            'current_address' => 'Koramangala 4th Block',
+            'city' => 'Bengaluru',
+            'total_course_fee' => 40000,
+            'discount_amount' => 0,
+            'fee_plan' => 'installments',
+            'installments_count' => 3,
+            'custom_installments' => [
+                [
+                    'installment_no' => 1,
+                    'title' => 'Admission Down-payment',
+                    'due_date' => now()->toDateString(),
+                    'amount' => 18000,
+                ],
+                [
+                    'installment_no' => 2,
+                    'title' => 'Installment 2 (Mid Term)',
+                    'due_date' => now()->addDays(30)->toDateString(),
+                    'amount' => 15000,
+                ],
+                [
+                    'installment_no' => 3,
+                    'title' => 'Installment 3 (Final Clearance)',
+                    'due_date' => now()->addDays(60)->toDateString(),
+                    'amount' => 12000,
+                ],
+            ],
+            'collected_downpayment' => 18000,
+            'payment_method' => 'upi',
+        ];
+
+        $response = $this->actingAs($this->admin)->post('/admissions', $postData);
+        $response->assertRedirect();
+
+        $student = Student::where('email', $postData['email'])->first();
+        $this->assertNotNull($student);
+
+        // Sum of installments is 18000 + 15000 + 12000 = 45000 (higher than base 40000)
+        $admission = Admission::where('student_id', $student->id)->first();
+        $this->assertEquals(45000, $admission->final_agreed_fee);
+        $this->assertEquals(3, $admission->installments_count);
+
+        $dues = StudentFeeDue::where('student_id', $student->id)->orderBy('installment_no')->get();
+        $this->assertCount(3, $dues);
+        $this->assertEquals(18000, $dues[0]->net_amount);
+        $this->assertEquals('paid', $dues[0]->status);
+        $this->assertEquals(15000, $dues[1]->net_amount);
+        $this->assertEquals('unpaid', $dues[1]->status);
+        $this->assertEquals(12000, $dues[2]->net_amount);
+        $this->assertEquals('unpaid', $dues[2]->status);
+
+        // Downpayment was fully recorded
+        $this->assertDatabaseHas('payments', [
+            'student_id' => $student->id,
+            'amount' => 18000,
+            'student_fee_due_id' => $dues[0]->id,
         ]);
     }
 
@@ -285,5 +362,44 @@ class CoachingErpWorkflowTest extends TestCase
         $response->assertSee('STUDENT ACQUISITION', false);
         $response->assertDontSee('FINANCES & CASHIER', false);
         $response->assertDontSee('EVALUATION & LMS', false);
+    }
+
+    public function test_settings_view_and_institute_branding_update(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/settings');
+        $response->assertStatus(200);
+        $response->assertSee('Institute Profile & Branding', false);
+        $response->assertSee('Institute Identity & Official Details', false);
+
+        // Update Institute Name and Tagline
+        $updateResponse = $this->actingAs($this->admin)->post('/settings/general', [
+            'institute_name' => 'Apex Super Coaching Academy',
+            'institute_tagline' => 'Pioneering Future Leaders in Science & Tech',
+            'institute_code' => 'APEX-SCA',
+            'institute_email' => 'contact@apexsca.edu',
+            'currency_symbol' => '₹',
+        ]);
+
+        $updateResponse->assertRedirect();
+        $updateResponse->assertSessionHas('success');
+
+        // Verify Database updates
+        $this->assertEquals('Apex Super Coaching Academy', \App\Models\SystemSetting::where('key', 'institute_name')->value('value'));
+        $this->assertEquals('Apex Super Coaching Academy', \App\Models\Institute::first()->name);
+
+        // Verify Dashboard and Login render updated Institute Name
+        $dashResponse = $this->actingAs($this->admin)->get('/dashboard');
+        $dashResponse->assertStatus(200);
+        $dashResponse->assertSee('Apex Super Coaching Academy', false);
+
+        \Illuminate\Support\Facades\Auth::logout();
+        $loginResponse = $this->get('/login');
+        $loginResponse->assertStatus(200);
+        $loginResponse->assertSee('Apex Super Coaching Academy', false);
+
+        // Restore original name
+        $this->actingAs($this->admin)->post('/settings/general', [
+            'institute_name' => 'Webotapp Academy',
+        ]);
     }
 }

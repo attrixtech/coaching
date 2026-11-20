@@ -27,9 +27,9 @@
                     <i class="fa-solid fa-award"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">Webotapp Academy</h1>
+                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'Webotapp Academy' }}</h1>
                     <div class="text-[11px] text-slate-500 font-medium">Department of Examinations & Academic Evaluation</div>
-                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">Autonomous Assessment Division &bull; Indiranagar Central</div>
+                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">Autonomous Assessment Division &bull; Central Campus</div>
                 </div>
             </div>
 
