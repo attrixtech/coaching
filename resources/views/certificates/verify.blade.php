@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Verification — Webotapp Academy</title>
+    <title>Certificate Verification — {{ $appInstituteName ?? 'thrumble.coaching' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -16,7 +16,7 @@
             <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-md">
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <h1 class="text-lg font-bold">{{ $appInstituteName ?? 'Webotapp Academy' }}</h1>
+            <h1 class="text-lg font-bold">{{ $appInstituteName ?? 'thrumble.coaching' }}</h1>
             <p class="text-xs text-slate-400">Official Digital Credential & Certificate Verification Portal</p>
         </div>
 
@@ -28,7 +28,7 @@
                         <i class="fa-solid fa-check"></i>
                     </div>
                     <h2 class="text-base font-extrabold text-emerald-900">Valid & Authenticated Credential</h2>
-                    <p class="text-xs text-emerald-700 mt-0.5">This certificate record has been verified against {{ $appInstituteName ?? 'Webotapp Academy' }} official records.</p>
+                    <p class="text-xs text-emerald-700 mt-0.5">This certificate record has been verified against {{ $appInstituteName ?? 'thrumble.coaching' }} official records.</p>
                 </div>
 
                 <!-- Credential Details Table -->
@@ -59,7 +59,7 @@
                     </div>
                     <div class="flex justify-between py-1">
                         <span class="text-slate-500">Campus:</span>
-                        <span class="font-medium text-slate-700">{{ $certificate->student->branch->name ?? 'Indiranagar Central' }}</span>
+                        <span class="font-medium text-slate-700">{{ $certificate->student->branch->name ?? 'Central Campus - Sanjay Place' }}</span>
                     </div>
                 </div>
 
@@ -81,10 +81,15 @@
                 </div>
             @endif
 
-            <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+            <div class="mt-6 pt-4 border-t border-slate-100 text-center space-y-1.5">
                 <a href="{{ route('login') }}" class="text-xs text-slate-400 hover:text-slate-600">
                     &larr; Return to Institute Portal
                 </a>
+                <div class="text-[10px] text-slate-400">
+                    Developed by <a href="https://www.attrixtech.com" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-600 hover:text-indigo-600 transition">Attrix Technologies</a>
+                    &bull;
+                    Marketed by <a href="https://www.infusionn.in" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-600 hover:text-indigo-600 transition">Infusionn Pvt. Ltd.</a>
+                </div>
             </div>
         </div>
 

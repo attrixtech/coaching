@@ -88,7 +88,7 @@
 
                     <div>
                         <span class="text-slate-400 block text-[11px]">Campus / Branch</span>
-                        <span class="font-semibold text-slate-900">{{ $enquiry->branch->name ?? 'Indiranagar' }}</span>
+                        <span class="font-semibold text-slate-900">{{ $enquiry->branch->name ?? 'Sanjay Place, Agra' }}</span>
                     </div>
 
                     <div>

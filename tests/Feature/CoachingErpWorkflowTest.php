@@ -15,7 +15,7 @@ class CoachingErpWorkflowTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->admin = User::where('email', 'admin@coaching.com')->first();
+        $this->admin = User::where('email', 'admin@thrumble.coaching')->first();
     }
 
     public function test_guest_is_redirected_to_login(): void
@@ -27,7 +27,7 @@ class CoachingErpWorkflowTest extends TestCase
     public function test_user_can_login_with_valid_credentials(): void
     {
         $response = $this->post('/login', [
-            'email' => 'admin@coaching.com',
+            'email' => 'admin@thrumble.coaching',
             'password' => 'password123',
         ]);
 
@@ -39,7 +39,7 @@ class CoachingErpWorkflowTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->get('/dashboard');
         $response->assertStatus(200);
-        $response->assertSee('Webotapp Academy');
+        $response->assertSee('thrumble.coaching');
         $response->assertSee('Executive Operations Dashboard');
     }
 
@@ -86,8 +86,8 @@ class CoachingErpWorkflowTest extends TestCase
             'email' => 'pooja.' . $uniq . '@example.com',
             'father_name' => 'Narayana Menon',
             'father_phone' => '+91 98' . rand(10000000, 99999999),
-            'current_address' => 'Indiranagar 2nd Stage',
-            'city' => 'Bengaluru',
+            'current_address' => 'Sanjay Place, Civil Lines',
+            'city' => 'Agra',
             'total_course_fee' => $course->total_fee,
             'discount_amount' => 5000,
             'discount_reason' => 'Academic Merit',
@@ -145,8 +145,8 @@ class CoachingErpWorkflowTest extends TestCase
             'email' => 'rahul.' . $uniq . '@example.com',
             'father_name' => 'Ramesh Sharma',
             'father_phone' => '+91 97' . rand(10000000, 99999999),
-            'current_address' => 'Koramangala 4th Block',
-            'city' => 'Bengaluru',
+            'current_address' => 'Kamla Nagar Main Market',
+            'city' => 'Agra',
             'total_course_fee' => 40000,
             'discount_amount' => 0,
             'fee_plan' => 'installments',
@@ -373,10 +373,10 @@ class CoachingErpWorkflowTest extends TestCase
 
         // Update Institute Name and Tagline
         $updateResponse = $this->actingAs($this->admin)->post('/settings/general', [
-            'institute_name' => 'Apex Super Coaching Academy',
+            'institute_name' => 'thrumble.coaching Agra Premier',
             'institute_tagline' => 'Pioneering Future Leaders in Science & Tech',
-            'institute_code' => 'APEX-SCA',
-            'institute_email' => 'contact@apexsca.edu',
+            'institute_code' => 'THRUMBLE-AGR',
+            'institute_email' => 'contact@thrumble.coaching',
             'currency_symbol' => '₹',
         ]);
 
@@ -384,22 +384,24 @@ class CoachingErpWorkflowTest extends TestCase
         $updateResponse->assertSessionHas('success');
 
         // Verify Database updates
-        $this->assertEquals('Apex Super Coaching Academy', \App\Models\SystemSetting::where('key', 'institute_name')->value('value'));
-        $this->assertEquals('Apex Super Coaching Academy', \App\Models\Institute::first()->name);
+        $this->assertEquals('thrumble.coaching Agra Premier', \App\Models\SystemSetting::where('key', 'institute_name')->value('value'));
+        $this->assertEquals('thrumble.coaching Agra Premier', \App\Models\Institute::first()->name);
 
         // Verify Dashboard and Login render updated Institute Name
         $dashResponse = $this->actingAs($this->admin)->get('/dashboard');
         $dashResponse->assertStatus(200);
-        $dashResponse->assertSee('Apex Super Coaching Academy', false);
+        $dashResponse->assertSee('thrumble.coaching Agra Premier', false);
 
         \Illuminate\Support\Facades\Auth::logout();
         $loginResponse = $this->get('/login');
         $loginResponse->assertStatus(200);
-        $loginResponse->assertSee('Apex Super Coaching Academy', false);
+        $loginResponse->assertSee('thrumble.coaching Agra Premier', false);
 
         // Restore original name
         $this->actingAs($this->admin)->post('/settings/general', [
-            'institute_name' => 'Webotapp Academy',
+            'institute_name' => 'thrumble.coaching',
+            'institute_code' => 'THRUMBLE',
+            'institute_email' => 'info@thrumble.coaching',
         ]);
     }
 }

@@ -13,7 +13,7 @@
                 </span>
             </h1>
             <p class="text-[11px] text-slate-500 mt-0.5">
-                Real-time metrics for <span class="font-semibold text-slate-700">{{ $appInstituteName ?? 'Webotapp Academy' }}</span> across all campuses and active batches.
+                Real-time metrics for <span class="font-semibold text-slate-700">{{ $appInstituteName ?? 'thrumble.coaching' }}</span> across all campuses and active batches.
             </p>
         </div>
 

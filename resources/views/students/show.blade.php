@@ -19,7 +19,7 @@
                 <div class="text-xs text-slate-500 flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
                     <span>Admission No: <strong class="text-slate-800 font-mono">{{ $student->admission_no }}</strong></span>
                     <span>Roll No: <strong class="text-slate-800 font-mono">{{ $student->roll_no ?? 'N/A' }}</strong></span>
-                    <span>Campus: <strong class="text-slate-800">{{ $student->branch->name ?? 'Indiranagar' }}</strong></span>
+                    <span>Campus: <strong class="text-slate-800">{{ $student->branch->name ?? 'Sanjay Place, Agra' }}</strong></span>
                 </div>
             </div>
         </div>

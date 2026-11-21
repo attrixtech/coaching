@@ -127,7 +127,7 @@ class AdmissionController extends Controller
                 'father_name' => $validated['father_name'],
                 'father_phone' => $validated['father_phone'],
                 'current_address' => $validated['current_address'],
-                'city' => $validated['city'] ?? 'Bengaluru',
+                'city' => $validated['city'] ?? 'Agra',
                 'status' => 'active',
             ]);
 

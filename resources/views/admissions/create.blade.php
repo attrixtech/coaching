@@ -244,7 +244,7 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1.5">Residential City</label>
-                        <input type="text" name="city" value="Bengaluru" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
+                        <input type="text" name="city" value="Agra" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
                     </div>
                 </div>
             </div>

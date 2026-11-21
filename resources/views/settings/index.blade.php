@@ -70,7 +70,7 @@
                             Institute Official Display Name <span class="text-rose-500">*</span>
                         </label>
                         <input type="text" name="institute_name" required 
-                               value="{{ $settings['institute_name'] ?? $institute->name ?? 'Webotapp Academy' }}" 
+                               value="{{ $settings['institute_name'] ?? $institute->name ?? 'thrumble.coaching' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-bold text-slate-900 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                         <p class="text-[10px] text-slate-400 mt-1">Displayed on the top header, sidebar brand, student portals, and invoices.</p>
                     </div>
@@ -90,8 +90,8 @@
                             Institute Code / Acronym
                         </label>
                         <input type="text" name="institute_code" 
-                               value="{{ $settings['institute_code'] ?? $institute->code ?? 'WACADEMY' }}" 
-                               placeholder="e.g. WACADEMY or APEX"
+                               value="{{ $settings['institute_code'] ?? $institute->code ?? 'THRUMBLE' }}" 
+                               placeholder="e.g. THRUMBLE"
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono uppercase text-brand-700 font-bold focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
@@ -100,7 +100,7 @@
                             Official Email Address
                         </label>
                         <input type="email" name="institute_email" 
-                               value="{{ $settings['institute_email'] ?? $institute->email ?? 'info@webotappacademy.com' }}" 
+                               value="{{ $settings['institute_email'] ?? $institute->email ?? 'info@thrumble.coaching' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
@@ -109,7 +109,7 @@
                             Contact Helpline / Phone
                         </label>
                         <input type="text" name="institute_phone" 
-                               value="{{ $settings['institute_phone'] ?? $institute->phone ?? '+91 80 4123 4567' }}" 
+                               value="{{ $settings['institute_phone'] ?? $institute->phone ?? '+91 562 401 4567' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
@@ -118,7 +118,7 @@
                             Official Website URL
                         </label>
                         <input type="text" name="institute_website" 
-                               value="{{ $settings['institute_website'] ?? $company->website ?? 'https://webotapp.com' }}" 
+                               value="{{ $settings['institute_website'] ?? $company->website ?? 'https://thrumble.coaching' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
@@ -127,7 +127,7 @@
                             Registered Office Address
                         </label>
                         <input type="text" name="institute_address" 
-                               value="{{ $settings['institute_address'] ?? $company->address ?? '100 Feet Road, HAL 2nd Stage, Indiranagar' }}" 
+                               value="{{ $settings['institute_address'] ?? $company->address ?? 'Thrumble Tower, Block 42, Sanjay Place Commercial Complex' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
@@ -135,11 +135,11 @@
                         <label class="block font-semibold text-slate-700 mb-1">City & State</label>
                         <div class="grid grid-cols-2 gap-2">
                             <input type="text" name="institute_city" 
-                                   value="{{ $settings['institute_city'] ?? $company->city ?? 'Bengaluru' }}" 
+                                   value="{{ $settings['institute_city'] ?? $company->city ?? 'Agra' }}" 
                                    placeholder="City"
                                    class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                             <input type="text" name="institute_state" 
-                                   value="{{ $settings['institute_state'] ?? $company->state ?? 'Karnataka' }}" 
+                                   value="{{ $settings['institute_state'] ?? $company->state ?? 'Uttar Pradesh' }}" 
                                    placeholder="State"
                                    class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                         </div>
@@ -148,21 +148,21 @@
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Pincode / Postal Code</label>
                         <input type="text" name="institute_pincode" 
-                               value="{{ $settings['institute_pincode'] ?? $company->pincode ?? '560038' }}" 
+                               value="{{ $settings['institute_pincode'] ?? $company->pincode ?? '282002' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Registration / Affiliation No.</label>
                         <input type="text" name="registration_no" 
-                               value="{{ $settings['registration_no'] ?? $company->registration_no ?? 'ED-REG-2024-9981' }}" 
+                               value="{{ $settings['registration_no'] ?? $company->registration_no ?? 'UP-AGR-ED-2024-9981' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">GSTIN / Tax ID</label>
                         <input type="text" name="gstin" 
-                               value="{{ $settings['gstin'] ?? $company->gstin ?? '29AAAAA0000A1Z5' }}" 
+                               value="{{ $settings['gstin'] ?? $company->gstin ?? '09AAACT1234F1Z5' }}" 
                                class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono uppercase text-slate-700 focus:bg-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                             <i class="fa-solid fa-graduation-cap"></i>
                         </div>
                         <div class="min-w-0">
-                            <div class="font-bold text-xs truncate">{{ $appInstituteName ?? 'Webotapp Academy' }}</div>
+                            <div class="font-bold text-xs truncate">{{ $appInstituteName ?? 'thrumble.coaching' }}</div>
                             <div class="text-[9px] text-slate-400 truncate">{{ $settings['institute_tagline'] ?? $institute->tagline ?? 'Coaching Institute Platform' }}</div>
                         </div>
                     </div>
@@ -203,15 +203,15 @@
                 <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 mb-3">
                     <div class="text-[9px] uppercase tracking-wider text-slate-400 mb-1.5 font-bold">Official Receipt Header</div>
                     <div class="border-b border-slate-200 pb-2">
-                        <div class="font-black text-xs text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'Webotapp Academy' }}</div>
+                        <div class="font-black text-xs text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'thrumble.coaching' }}</div>
                         <div class="text-[10px] text-slate-500 font-medium">{{ $settings['institute_tagline'] ?? $institute->tagline ?? 'Premier Coaching & Learning Centre' }}</div>
                         <div class="text-[9px] text-slate-400 mt-1 font-mono">
-                            {{ $settings['institute_phone'] ?? $institute->phone ?? '+91 80 4123 4567' }} &bull; {{ $settings['institute_email'] ?? $institute->email ?? 'info@webotappacademy.com' }}
+                            {{ $settings['institute_phone'] ?? $institute->phone ?? '+91 562 401 4567' }} &bull; {{ $settings['institute_email'] ?? $institute->email ?? 'info@thrumble.coaching' }}
                         </div>
                     </div>
                     <div class="text-[9px] text-slate-500 mt-1 flex justify-between">
-                        <span>GSTIN: {{ $settings['gstin'] ?? $company->gstin ?? '29AAAAA0000A1Z5' }}</span>
-                        <span>Ref: {{ $settings['institute_code'] ?? $institute->code ?? 'WACADEMY' }}</span>
+                        <span>GSTIN: {{ $settings['gstin'] ?? $company->gstin ?? '09AAACT1234F1Z5' }}</span>
+                        <span>Ref: {{ $settings['institute_code'] ?? $institute->code ?? 'THRUMBLE' }}</span>
                     </div>
                 </div>
 
@@ -353,22 +353,22 @@
                 <input type="hidden" name="institute_id" value="{{ $institute->id ?? 1 }}">
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">Campus Name <span class="text-rose-500">*</span></label>
-                    <input type="text" name="name" required placeholder="e.g. South Campus - Koramangala" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2">
+                    <input type="text" name="name" required placeholder="e.g. South Campus - Dayalbagh" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2">
                 </div>
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">Branch Code <span class="text-rose-500">*</span></label>
-                    <input type="text" name="code" required placeholder="e.g. BLR-SOUTH" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono">
+                    <input type="text" name="code" required placeholder="e.g. AGR-SOUTH" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 font-mono">
                 </div>
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">Contact Phone</label>
-                    <input type="text" name="phone" placeholder="+91 98765 00000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2">
+                    <input type="text" name="phone" placeholder="+91 98370 00000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2">
                 </div>
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">City</label>
-                    <input type="text" name="city" value="Bengaluru" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2">
+                    <input type="text" name="city" value="Agra" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2">
                 </div>
 
                 <button type="submit" class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-bold shadow-xs transition">

@@ -34,8 +34,8 @@ class AuthController extends Controller
         if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
             $user = User::where('email', strtolower($input))->first();
 
-            // Alias fallback: student1.aarav@apexcoach.test maps to the first seeded student
-            if (!$user && strtolower($input) === 'student1.aarav@apexcoach.test') {
+            // Alias fallback: student1.aarav@thrumble.coaching maps to the first seeded student
+            if (!$user && strtolower($input) === 'student1.aarav@thrumble.coaching') {
                 $user = User::where('user_type', 'student')->first();
             }
         }
@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         // 3. Username shortcuts
         if (!$user) {
-            if (in_array(strtolower($input), ['student', 'student1', 'student@coaching.com', 'student@webotapp.com'])) {
+            if (in_array(strtolower($input), ['student', 'student1', 'student@thrumble.coaching'])) {
                 $user = User::where('user_type', 'student')->first();
             }
         }

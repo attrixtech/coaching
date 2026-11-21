@@ -1,11 +1,11 @@
-# Webotapp Coaching Institute Management ERP
+# thrumble.coaching — Institute Management ERP
 ## Enterprise Multi-Branch Coaching, Academy & Learning Management System
 ### Built with Laravel 11, PHP 8.4, MySQL 8, Tailwind CSS, Alpine.js & Chart.js
 
 ---
 
 ## 1. Executive Summary & Capabilities
-**Webotapp Coaching Institute Management ERP** is an enterprise operations management suite built specifically for educational institutions, test-prep academies (IIT-JEE / NEET / UPSC), IT bootcamps, and vocational training centers.
+**thrumble.coaching** is an enterprise operations management suite built specifically for educational institutions, test-prep academies (IIT-JEE / NEET / UPSC), IT bootcamps, and vocational training centers, headquartered in **Agra, Uttar Pradesh**.
 
 The application manages the entire educational operations lifecycle:
 
@@ -21,21 +21,21 @@ The system comes pre-seeded with relationally consistent enterprise demo data ma
 
 | Role | Email Address | Password | Capabilities |
 |---|---|---|---|
-| **Super Administrator** | `admin@coaching.com` | `password123` | Unrestricted global access, branch settings, financial reports, all campuses |
-| **Branch Manager** | `manager.central@webotapp.com` | `password123` | Campus-level operations, batch timetables, admissions |
-| **Academic Counsellor** | `counsellor1@webotapp.com` | `password123` | Leads CRM, pipeline, follow-up interactions, new admissions |
-| **Chief Accountant** | `accounts@webotapp.com` | `password123` | Fee dues ledger, cashier collection desk, payment receipts, branch expenses |
-| **Senior Faculty** | `alok.nath@webotapp.com` | `password123` | Daily attendance register, examinations, marks entry, LMS study materials |
-| **Student** | `student1.aarav@apexcoach.test` | `password123` | 360-degree student profile, fees ledger, scorecards, certificates |
+| **Super Administrator** | `admin@thrumble.coaching` | `password123` | Unrestricted global access, branch settings, financial reports, all campuses |
+| **Branch Manager** | `manager.central@thrumble.coaching` | `password123` | Campus-level operations, batch timetables, admissions |
+| **Academic Counsellor** | `counsellor1@thrumble.coaching` | `password123` | Leads CRM, pipeline, follow-up interactions, new admissions |
+| **Chief Accountant** | `accounts@thrumble.coaching` | `password123` | Fee dues ledger, cashier collection desk, payment receipts, branch expenses |
+| **Senior Faculty** | `alok.nath@thrumble.coaching` | `password123` | Daily attendance register, examinations, marks entry, LMS study materials |
+| **Student** | `student1.aarav@thrumble.coaching` | `password123` | 360-degree student profile, fees ledger, scorecards, certificates |
 
 *Tip: The login page includes quick **One-Click Demo Login** buttons for instant role switching.*
 
 ---
 
 ## 3. Verified System Data (Section 45 Compliance)
-- **Company**: 1 (`Webotapp EdTech Global Pvt Ltd`)
-- **Institutes**: 2 (`Webotapp Academy`, `Webotapp Junior Science`)
-- **Campuses / Branches**: 3 (`Indiranagar Central`, `Hebbal North`, `Digital / Hybrid Hub`)
+- **Company**: 1 (`Thrumble Coaching Pvt. Ltd.`, Sanjay Place, Agra, Uttar Pradesh)
+- **Institutes**: 2 (`thrumble.coaching`, `thrumble.coaching Junior Science & Test Prep`)
+- **Campuses / Branches**: 3 (`Central Campus - Sanjay Place`, `North Campus - Kamla Nagar`, `Digital & Hybrid Learning Hub — Fatehabad Road, Agra`)
 - **Courses**: 10 (Digital Marketing, Web Development, Flutter, AI/ML, Python, Computer Fundamentals, Spoken English, Class 10 Tuition, JEE/NEET Prep, Tally Prime Accounting)
 - **Subjects**: 30 Master Curriculum Subjects
 - **Batches**: 20 Active Cohorts (Morning, Evening, Weekend)
@@ -111,3 +111,9 @@ http://127.0.0.1:8000
 ```
 - Direct access: `http://127.0.0.1:8000/login`
 - Sample Certificate Verification: `http://127.0.0.1:8000/verify-certificate/VERIF-PVQUKXJXJKBP`
+
+---
+
+## 7. Credits
+- **Development**: [Attrix Technologies](https://www.attrixtech.com)
+- **Marketing**: [Infusionn Pvt. Ltd.](https://www.infusionn.in)

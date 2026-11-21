@@ -27,9 +27,9 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'Webotapp Academy' }}</h1>
+                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'thrumble.coaching' }}</h1>
                     <div class="text-[11px] text-slate-500 font-medium">{{ $systemSettings['institute_tagline'] ?? $appInstitute?->tagline ?? 'Premier Institute for Tech, Management & Competitive Coaching' }}</div>
-                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">GSTIN: {{ $systemSettings['gstin'] ?? $appCompany?->gstin ?? '29AAACW1234F1Z5' }} &bull; PAN: {{ $appCompany?->pan_number ?? 'AAACW1234F' }}</div>
+                    <div class="text-[10px] text-slate-400 font-mono mt-0.5">GSTIN: {{ $systemSettings['gstin'] ?? $appCompany?->gstin ?? '09AAACT1234F1Z5' }} &bull; PAN: {{ $appCompany?->pan_number ?? 'AAACT1234F' }}</div>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
             <div class="space-y-1.5">
                 <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Academic Details</span>
                 <div class="text-sm font-bold text-brand-700">{{ $payment->student->latestAdmission->course->name ?? 'Course' }}</div>
-                <div class="text-[11px] text-slate-600">Campus: <strong>{{ $payment->student->branch->name ?? 'Indiranagar' }}</strong></div>
+                <div class="text-[11px] text-slate-600">Campus: <strong>{{ $payment->student->branch->name ?? 'Sanjay Place, Agra' }}</strong></div>
                 <div class="text-[11px] text-slate-600">Payment Mode: <strong class="uppercase">{{ $payment->payment_method }}</strong></div>
                 <div class="text-[11px] text-slate-600">Reference: <span class="font-mono">{{ $payment->transaction_reference ?? 'DIRECT-CASH' }}</span></div>
             </div>

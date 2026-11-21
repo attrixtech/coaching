@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In — {{ $appInstituteName ?? 'Webotapp Coaching Institute ERP' }}</title>
+    <title>Sign In — {{ $appInstituteName ?? 'thrumble.coaching' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -18,7 +18,7 @@
             <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center shadow-md border border-white/20">
                 <i class="fa-solid fa-graduation-cap text-2xl text-indigo-300"></i>
             </div>
-            <h1 class="text-xl font-bold tracking-tight">{{ $appInstituteName ?? 'Webotapp Academy ERP' }}</h1>
+            <h1 class="text-xl font-bold tracking-tight">{{ $appInstituteName ?? 'thrumble.coaching' }}</h1>
             <p class="text-xs text-indigo-200 mt-0.5">{{ $systemSettings['institute_tagline'] ?? 'Coaching Institute & Learning Management System' }}</p>
         </div>
 
@@ -48,8 +48,8 @@
                     </label>
                     <div class="relative">
                         <i class="fa-regular fa-user absolute left-3 top-2.5 text-slate-400 text-sm"></i>
-                        <input type="text" name="email" value="{{ old('email', 'admin@coaching.com') }}" required 
-                               placeholder="e.g. admin@coaching.com or student1.aditya@apexcoach.test"
+                        <input type="text" name="email" value="{{ old('email', 'admin@thrumble.coaching') }}" required 
+                               placeholder="e.g. admin@thrumble.coaching or student1.aditya@thrumble.coaching"
                                class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-indigo-600 focus:bg-white focus:outline-none transition">
                     </div>
                 </div>
@@ -131,6 +131,16 @@
                             <div class="text-[10px] text-slate-400">Classes & Marks</div>
                         </div>
                     </a>
+                </div>
+            </div>
+
+            <!-- Credits -->
+            <div class="mt-4 pt-3 border-t border-slate-100 text-center text-[10px] text-slate-400 space-y-0.5">
+                <div>&copy; {{ date('Y') }} {{ $appInstituteName ?? 'thrumble.coaching' }} &bull; Agra, Uttar Pradesh</div>
+                <div>
+                    Developed by <a href="https://www.attrixtech.com" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-600 hover:text-indigo-600 transition">Attrix Technologies</a>
+                    &bull;
+                    Marketed by <a href="https://www.infusionn.in" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-600 hover:text-indigo-600 transition">Infusionn Pvt. Ltd.</a>
                 </div>
             </div>
         </div>

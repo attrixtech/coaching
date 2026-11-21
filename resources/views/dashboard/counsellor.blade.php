@@ -15,7 +15,7 @@
                 </span>
                 <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Welcome, {{ auth()->user()->name }}</h1>
                 <p class="text-xs text-purple-200 mt-0.5">
-                    {{ auth()->user()->designation ?? 'Senior Academic Counsellor' }} &bull; Webotapp Academy Student Acquisition
+                    {{ auth()->user()->designation ?? 'Senior Academic Counsellor' }} &bull; {{ $appInstituteName ?? 'thrumble.coaching' }} Student Acquisition
                 </p>
             </div>
         </div>

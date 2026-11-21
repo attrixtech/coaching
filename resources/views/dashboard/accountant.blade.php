@@ -15,7 +15,7 @@
                 </span>
                 <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Welcome, {{ auth()->user()->name }}</h1>
                 <p class="text-xs text-emerald-200 mt-0.5">
-                    Chief Accounts & Cashier Desk &bull; Webotapp Academy Central Campus
+                    Chief Accounts & Cashier Desk &bull; {{ $appInstituteName ?? 'thrumble.coaching' }} Central Campus
                 </p>
             </div>
         </div>

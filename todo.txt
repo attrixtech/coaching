@@ -2544,7 +2544,7 @@ Support growth from a small coaching center to a multi-branch institute.
 
 Create a sample institute.
 
-Institute Name: Webotapp Academy.
+Institute Name: thrumble.coaching.
 
 Generate:
 

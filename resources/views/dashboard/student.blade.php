@@ -18,7 +18,7 @@
                     <p class="text-[11px] text-indigo-200">
                         Adm No: <strong class="text-white font-mono">{{ $student->admission_no }}</strong> &bull;
                         Roll No: <strong class="text-white font-mono">{{ $student->roll_no }}</strong> &bull;
-                        Campus: <span class="text-white">{{ $student->branch->name ?? 'Indiranagar Central' }}</span>
+                        Campus: <span class="text-white">{{ $student->branch->name ?? 'Central Campus - Sanjay Place' }}</span>
                     </p>
                 </div>
             </div>

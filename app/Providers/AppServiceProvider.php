@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
                         return Company::first();
                     });
 
-                    $instituteName = $settings['institute_name'] ?? $institute?->name ?? 'Webotapp Academy';
+                    $instituteName = $settings['institute_name'] ?? $institute?->name ?? 'thrumble.coaching';
 
                     $view->with([
                         'systemSettings' => $settings,
@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
                     'systemSettings' => [],
                     'appInstitute' => null,
                     'appCompany' => null,
-                    'appInstituteName' => 'Webotapp Academy',
+                    'appInstituteName' => 'thrumble.coaching',
                 ]);
             }
         });

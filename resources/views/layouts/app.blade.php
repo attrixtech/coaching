@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Dashboard' }} — {{ $appInstituteName ?? 'Webotapp Coaching ERP' }}</title>
+    <title>{{ $title ?? 'Dashboard' }} — {{ $appInstituteName ?? 'thrumble.coaching' }}</title>
     <!-- Tailwind CSS CDN for instant styling resilience and fast preview -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="min-w-0">
                         <div class="font-bold text-white text-sm tracking-wide truncate">
-                            {{ $appInstituteName ?? 'Webotapp Academy' }}
+                            {{ $appInstituteName ?? 'thrumble.coaching' }}
                         </div>
                         <div class="text-[10px] text-slate-400 truncate">{{ $systemSettings['institute_tagline'] ?? $appInstitute?->tagline ?? 'Coaching Institute Platform' }}</div>
                     </div>
@@ -410,7 +410,7 @@
                     <!-- Institute Brand Pill -->
                     <div class="flex items-center gap-1.5 bg-slate-100 px-2.5 py-1 rounded-full text-[11px] font-medium text-slate-700">
                         <i class="fa-solid fa-building-columns text-brand-600"></i>
-                        <span class="font-bold text-slate-900 truncate max-w-[180px]">{{ $appInstituteName ?? 'Webotapp Academy' }}</span>
+                        <span class="font-bold text-slate-900 truncate max-w-[180px]">{{ $appInstituteName ?? 'thrumble.coaching' }}</span>
                     </div>
 
                     <!-- Academic Session Badge -->
@@ -512,8 +512,15 @@
             </main>
 
             <!-- FOOTER -->
-            <footer class="bg-white border-t border-slate-200 px-4 py-2 text-center text-[11px] text-slate-400">
-                {{ $appInstituteName ?? 'Webotapp Academy' }} ERP &copy; {{ date('Y') }} &bull; Enterprise Coaching & Academy Management System
+            <footer class="bg-white border-t border-slate-200 px-4 py-2.5 text-center text-[11px] text-slate-500">
+                <div>
+                    {{ $appInstituteName ?? 'thrumble.coaching' }} &copy; {{ date('Y') }} &bull; Agra, Uttar Pradesh
+                </div>
+                <div class="mt-0.5 text-[10px] text-slate-400">
+                    Developed by <a href="https://www.attrixtech.com" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-600 hover:text-brand-600 transition">Attrix Technologies</a>
+                    &bull;
+                    Marketed by <a href="https://www.infusionn.in" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-600 hover:text-brand-600 transition">Infusionn Pvt. Ltd.</a>
+                </div>
             </footer>
         </div>
     </div>

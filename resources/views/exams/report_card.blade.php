@@ -27,7 +27,7 @@
                     <i class="fa-solid fa-award"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'Webotapp Academy' }}</h1>
+                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $appInstituteName ?? 'thrumble.coaching' }}</h1>
                     <div class="text-[11px] text-slate-500 font-medium">Department of Examinations & Academic Evaluation</div>
                     <div class="text-[10px] text-slate-400 font-mono mt-0.5">Autonomous Assessment Division &bull; Central Campus</div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="text-sm font-bold text-slate-900">{{ $student->full_name }}</div>
                 <div class="text-[11px] text-slate-600">Admission No: <strong class="font-mono">{{ $student->admission_no }}</strong></div>
                 <div class="text-[11px] text-slate-600">Roll No: <strong class="font-mono">{{ $student->roll_no }}</strong></div>
-                <div class="text-[11px] text-slate-600">Campus: <span>{{ $student->branch->name ?? 'Indiranagar' }}</span></div>
+                <div class="text-[11px] text-slate-600">Campus: <span>{{ $student->branch->name ?? 'Sanjay Place, Agra' }}</span></div>
             </div>
 
             <div class="space-y-1.5">
